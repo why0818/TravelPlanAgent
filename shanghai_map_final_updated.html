@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <style type="text/css">
+        body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+        </style>    
+        <script type="text/javascript" src="http://api.map.baidu.com/api?type=webgl&v=1.0&ak=ezRlWrv4MvhY3mN8G8yiUkIiLVNBS70z"></script>
+        <script type="text/javascript" src="http://api.map.baidu.com/library/TrackAnimation/src/TrackAnimation_min.js"></script>
+
+        <title>绘制轨迹</title>
+    </head>
+    <body>
+        <div id="allmap"></div>
+    </body>
+    </html>
+    <script type="text/javascript">
+        // GL版命名空间为BMapGL
+        // 按住鼠标右键，修改倾斜角和角度
+        var bmap = new BMapGL.Map("allmap");    // 创建Map实例
+        bmap.centerAndZoom(new BMapGL.Point(121.49720404433653, 31.243452887043176), 16);
+        bmap.enableScrollWheelZoom(true);     // 开启鼠标滚轮缩放
+        bmap.setTilt(50);      // 设置地图初始倾斜角
+
+        var path = [{lng: 121.49720404433653, lat: 31.243452887043176},{lng: 121.486852, lat: 31.241716},{lng: 121.499069, lat: 31.232747},{lng: 121.47590800544202, lat: 31.213946152720272},{lng: 121.50637870800159, lat: 31.245413754402072}];
+
+        var point = [];
+        for (var i = 0; i < path.length; i++) {
+            var poi = new BMapGL.Point(path[i].lng, path[i].lat);
+            point.push(poi);
+            var marker = new BMapGL.Marker(poi); //创建标注
+            bmap.addOverlay(marker); //将标注添加到地图中
+        }
+
+
+        var pl = new BMapGL.Polyline(point,{strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5});
+
+        var trackAni = new BMapGLLib.TrackAnimation(bmap, pl, {
+            overallView: true, // 动画完成后自动调整视野到总览
+            tilt: 30,          // 轨迹播放的角度，默认为55
+            duration: 20000,   // 动画持续时长，默认为10000，单位ms
+            delay: 3000        // 动画开始的延迟，默认0，单位ms
+        });
+
+        trackAni.start();
+    </script>

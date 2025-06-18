@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <style type="text/css">
+        body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+        </style>    
+        <script type="text/javascript" src="http://api.map.baidu.com/api?type=webgl&v=1.0&ak=ezRlWrv4MvhY3mN8G8yiUkIiLVNBS70z"></script>
+        <script type="text/javascript" src="http://api.map.baidu.com/library/TrackAnimation/src/TrackAnimation_min.js"></script>
+
+        <title>绘制轨迹</title>
+    </head>
+    <body>
+        <div id="allmap"></div>
+    </body>
+    </html>
+    <script type="text/javascript">
+        // GL版命名空间为BMapGL
+        // 按住鼠标右键，修改倾斜角和角度
+        var bmap = new BMapGL.Map("allmap");    // 创建Map实例
+        bmap.centerAndZoom(new BMapGL.Point(116.32831001744927, 39.90244833162456), 16);
+        bmap.enableScrollWheelZoom(true);     // 开启鼠标滚轮缩放
+        bmap.setTilt(50);      // 设置地图初始倾斜角
+
+        var path = [{lng: 116.32831001744927, lat: 39.90244833162456},{lng: 116.3173645745027, lat: 40.018737886658876},{lng: 116.40520789658953, lat: 39.91433342730802},{lng: 116.40311915408874, lat: 39.92430512673734},{lng: 116.40337202672916, lat: 39.90236561094033},{lng: 116.4193839945895, lat: 39.8896677636608},{lng: 116.40225121437821, lat: 39.945725362580255},{lng: 116.3986748278937, lat: 39.94022067210088},{lng: 116.40949848951519, lat: 39.94022236549958},{lng: 116.27736010645316, lat: 40.004999472642666},{lng: 116.31089749377003, lat: 40.000696246227335}];
+
+        var point = [];
+        for (var i = 0; i < path.length; i++) {
+            var poi = new BMapGL.Point(path[i].lng, path[i].lat);
+            point.push(poi);
+            var marker = new BMapGL.Marker(poi); //创建标注
+            bmap.addOverlay(marker); //将标注添加到地图中
+        }
+
+
+        var pl = new BMapGL.Polyline(point,{strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5});
+
+        var trackAni = new BMapGLLib.TrackAnimation(bmap, pl, {
+            overallView: true, // 动画完成后自动调整视野到总览
+            tilt: 30,          // 轨迹播放的角度，默认为55
+            duration: 20000,   // 动画持续时长，默认为10000，单位ms
+            delay: 3000        // 动画开始的延迟，默认0，单位ms
+        });
+
+        trackAni.start();
+    </script>
