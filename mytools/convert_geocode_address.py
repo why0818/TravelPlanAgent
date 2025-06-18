@@ -12,7 +12,7 @@ def geocode(address: str) -> Optional[Dict[str, float]]:
     :return: 返回一个字典，包含经度(lng)和纬度(lat)
     """
     AK = os.environ.get('BAIDU_MAP_API_KEY')
-    AK = '0kliFgPssbIjJcsS3PmUIsiYfiDaQqxJ'
+    AK = '修改为自己的key'
     url = 'http://api.map.baidu.com/geocoding/v3/?address={}&output=json&ak={}&callback=showLocation'.format(address, AK)
     res = requests.get(url)
     
@@ -35,7 +35,7 @@ def reverse_geocode(coord: Dict[str, float]) -> Optional[Tuple[str, str]]:
     :return: 返回解析后的地址信息或兴趣点名称
     """
     AK = os.environ.get('BAIDU_MAP_API_KEY')
-    AK = '0kliFgPssbIjJcsS3PmUIsiYfiDaQqxJ'
+    AK = '修改为自己的key'
     url = 'http://api.map.baidu.com/reverse_geocoding/v3/?ak={}&output=json&coordtype=bd09ll&location={},{}&extensions_poi=1&radius=50'.format(AK, coord['lat'], coord['lng'])
     res = requests.get(url)
     
