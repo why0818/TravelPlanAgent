@@ -17,7 +17,7 @@ def create_map_html(points: List[Dict[str, float]], output_path: str = './map.ht
     logging.info(f'开始生成地图，坐标点数量: {len(points)}')
     logging.info(f'输出路径: {output_path}')
     
-    ak = 'ezRlWrv4MvhY3mN8G8yiUkIiLVNBS70z'
+    ak = '修改为自己的key'
     if not points:
         raise ValueError("坐标点列表不能为空")
     
